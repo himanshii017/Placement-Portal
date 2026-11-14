@@ -1,0 +1,327 @@
+
+/* General Styling */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #263247;
+    background-color: #ffffff;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Navigation Bar */
+
+.navbar-brand {
+    font-size: 25px;
+    color: #292b72 !important;
+}
+
+.navbar-brand span {
+    color: #7952d6;
+}
+
+.nav-link {
+    font-weight: 500;
+    margin: 0 7px;
+    color: #344054;
+}
+
+.nav-link:hover {
+    color: #7952d6;
+}
+
+/* Buttons */
+
+.btn-primary {
+    background-color: #7050c9;
+    border-color: #7050c9;
+}
+
+.btn-primary:hover {
+    background-color: #5435a8;
+    border-color: #5435a8;
+}
+
+.btn-outline-primary {
+    color: #7050c9;
+    border-color: #7050c9;
+}
+
+.btn-outline-primary:hover {
+    background-color: #7050c9;
+    border-color: #7050c9;
+}
+
+/* Hero Section */
+
+.hero-section {
+    padding: 100px 0;
+    background: linear-gradient(120deg, #f5f2ff, #eef2ff);
+}
+
+.hero-label {
+    color: #7050c9;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.hero-section h1 {
+    font-size: 48px;
+    font-weight: 750;
+    line-height: 1.25;
+    margin-top: 20px;
+    color: #222653;
+}
+
+.hero-section h1 span {
+    display: block;
+    color: #7952d6;
+}
+
+.hero-description {
+    color: #667085;
+    font-size: 17px;
+    line-height: 1.8;
+    margin-top: 20px;
+    max-width: 550px;
+}
+
+.hero-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(50, 40, 100, 0.10);
+}
+
+.hero-icon {
+    font-size: 65px;
+    margin-bottom: 20px;
+}
+
+.hero-card h3 {
+    font-weight: 700;
+    color: #292b72;
+}
+
+.hero-card p {
+    color: #667085;
+    margin-top: 15px;
+}
+
+.career-stat {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eeeeee;
+}
+
+.career-stat h4 {
+    color: #7952d6;
+    font-weight: 700;
+}
+
+.career-stat small {
+    color: #667085;
+}
+
+/* Common Section Styling */
+
+.section-padding {
+    padding: 85px 0;
+}
+
+.section-heading span {
+    color: #7952d6;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.section-heading h2 {
+    color: #222653;
+    font-size: 34px;
+    font-weight: 700;
+    margin-top: 12px;
+}
+
+.section-heading p {
+    color: #667085;
+    margin-top: 12px;
+}
+
+/* About Cards */
+
+.info-card {
+    background: white;
+    padding: 35px 25px;
+    text-align: center;
+    height: 100%;
+    border: 1px solid #eeeeee;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.info-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.info-icon {
+    font-size: 45px;
+    margin-bottom: 20px;
+}
+
+.info-card h4 {
+    color: #292b72;
+    font-weight: 700;
+}
+
+.info-card p {
+    color: #667085;
+    line-height: 1.7;
+    margin-top: 12px;
+}
+
+/* Jobs Section */
+
+.jobs-section {
+    background-color: #f8f7fc;
+}
+
+.job-card {
+    background: white;
+    padding: 30px;
+    height: 100%;
+    border-radius: 15px;
+    border: 1px solid #eeeeee;
+    transition: 0.3s;
+}
+
+.job-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.job-category {
+    color: #7952d6;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.job-card h4 {
+    color: #292b72;
+    font-weight: 700;
+    margin-top: 18px;
+}
+
+.job-card p {
+    color: #667085;
+    margin-top: 8px;
+}
+
+.job-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #667085;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+/* Features */
+
+.feature-card {
+    padding: 30px;
+    border-radius: 15px;
+    background: #f8f7fc;
+    height: 100%;
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    background: #eee9ff;
+    transform: translateY(-5px);
+}
+
+.feature-card h4 {
+    color: #292b72;
+    font-weight: 700;
+}
+
+.feature-card p {
+    color: #667085;
+    margin-top: 15px;
+    line-height: 1.7;
+}
+
+/* Contact Section */
+
+.contact-section {
+    background: linear-gradient(120deg, #7050c9, #46328e);
+    color: white;
+}
+
+.contact-section h2 {
+    font-size: 35px;
+    font-weight: 700;
+}
+
+.contact-section p {
+    margin-top: 15px;
+    color: #eeeeff;
+}
+
+/* Footer */
+
+.footer {
+    background: #202044;
+    color: white;
+    padding: 40px 0;
+}
+
+.footer h4 {
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.footer p {
+    color: #c5c5dc;
+    margin-top: 10px;
+}
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+
+    .hero-section {
+        padding: 65px 0;
+    }
+
+    .hero-section h1 {
+        font-size: 34px;
+    }
+
+    .section-heading h2 {
+        font-size: 27px;
+    }
+
+    .contact-section h2 {
+        font-size: 28px;
+    }
+
+}

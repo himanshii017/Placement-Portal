@@ -1,0 +1,147 @@
+
+<?php
+session_start();
+
+require_once "../config/database.php";
+
+$message = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $email = trim($_POST["email"]);
+    $password = $_POST["password"];
+
+    // Find user by email
+    $sql = "SELECT * FROM users WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$email]);
+
+    $user = $stmt->fetch();
+
+    // Verify password
+    if ($user && password_verify($password, $user["password"])) {
+
+        session_regenerate_id(true);
+
+        $_SESSION["user_id"] = $user["user_id"];
+        $_SESSION["full_name"] = $user["full_name"];
+        $_SESSION["role"] = $user["role"];
+
+        // Redirect according to role
+        if ($_SESSION["role"] === "admin") {
+
+            header("Location: ../admin/dashboard.php");
+
+        } elseif ($_SESSION["role"] === "student") {
+
+            header("Location: ../student/dashboard.php");
+
+        } else {
+
+            $message = "Please use the company login page.";
+
+            session_unset();
+            session_destroy();
+        }
+
+        if ($message === "") {
+            exit();
+        }
+
+    } else {
+
+        $message = "Invalid email or password.";
+
+    }
+
+} // This closes the POST condition
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - CareerConnect</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-5">
+
+            <div class="card shadow p-4">
+
+                <h2 class="text-center mb-4">Login</h2>
+
+                <?php if (!empty($message)): ?>
+
+                    <div class="alert alert-danger">
+                        <?php echo htmlspecialchars($message); ?>
+                    </div>
+
+                <?php endif; ?>
+
+                <form method="POST">
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Email Address
+                        </label>
+
+                        <input type="email"
+                               name="email"
+                               class="form-control"
+                               required>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Password
+                        </label>
+
+                        <input type="password"
+                               name="password"
+                               class="form-control"
+                               required>
+
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary w-100">
+                        Login
+                    </button>
+
+                </form>
+
+                <p class="text-center mt-3">
+
+                    Don't have an account?
+
+                    <a href="register.php">
+                        Register here
+                    </a>
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
