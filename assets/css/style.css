@@ -1,10 +1,17 @@
+/* =========================================
+   CAREERCONNECT - MAIN STYLESHEET
+========================================= */
 
-/* General Styling */
+/* GENERAL STYLING */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -13,18 +20,16 @@ body {
     background-color: #ffffff;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 a {
     text-decoration: none;
 }
 
-/* Navigation Bar */
+
+/* NAVIGATION BAR */
 
 .navbar-brand {
     font-size: 25px;
+    font-weight: 750;
     color: #292b72 !important;
 }
 
@@ -36,13 +41,21 @@ a {
     font-weight: 500;
     margin: 0 7px;
     color: #344054;
+    transition: 0.3s;
 }
 
 .nav-link:hover {
     color: #7952d6;
 }
 
-/* Buttons */
+
+/* BUTTONS */
+
+.btn {
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
 
 .btn-primary {
     background-color: #7050c9;
@@ -52,6 +65,7 @@ a {
 .btn-primary:hover {
     background-color: #5435a8;
     border-color: #5435a8;
+    transform: translateY(-2px);
 }
 
 .btn-outline-primary {
@@ -62,9 +76,11 @@ a {
 .btn-outline-primary:hover {
     background-color: #7050c9;
     border-color: #7050c9;
+    color: white;
 }
 
-/* Hero Section */
+
+/* HERO SECTION */
 
 .hero-section {
     padding: 100px 0;
@@ -72,6 +88,7 @@ a {
 }
 
 .hero-label {
+    display: inline-block;
     color: #7050c9;
     font-size: 13px;
     font-weight: 700;
@@ -79,7 +96,7 @@ a {
 }
 
 .hero-section h1 {
-    font-size: 48px;
+    font-size: clamp(36px, 5vw, 52px);
     font-weight: 750;
     line-height: 1.25;
     margin-top: 20px;
@@ -99,6 +116,15 @@ a {
     max-width: 550px;
 }
 
+.hero-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    color: #475467;
+    font-size: 13px;
+    font-weight: 500;
+}
+
 .hero-card {
     background: white;
     padding: 40px 30px;
@@ -111,19 +137,30 @@ a {
     margin-bottom: 20px;
 }
 
+.hero-card-label {
+    display: inline-block;
+    color: #7952d6;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
 .hero-card h3 {
     font-weight: 700;
     color: #292b72;
+    margin-top: 15px;
 }
 
 .hero-card p {
     color: #667085;
     margin-top: 15px;
+    line-height: 1.7;
 }
 
 .career-stat {
     display: flex;
     justify-content: space-around;
+    gap: 15px;
     margin-top: 30px;
     padding-top: 20px;
     border-top: 1px solid #eeeeee;
@@ -138,10 +175,16 @@ a {
     color: #667085;
 }
 
-/* Common Section Styling */
+
+/* COMMON SECTION STYLING */
 
 .section-padding {
     padding: 85px 0;
+}
+
+.section-heading {
+    max-width: 750px;
+    margin: auto;
 }
 
 .section-heading span {
@@ -161,9 +204,63 @@ a {
 .section-heading p {
     color: #667085;
     margin-top: 12px;
+    line-height: 1.8;
 }
 
-/* About Cards */
+
+/* PORTAL ACCESS SECTION */
+
+.portal-section {
+    background-color: #f8f7fc;
+}
+
+.portal-card {
+    background: white;
+    padding: 35px 28px;
+    height: 100%;
+    border: 1px solid #eeeeee;
+    border-radius: 17px;
+    box-shadow: 0 5px 20px rgba(50, 40, 100, 0.04);
+    transition: all 0.3s ease;
+}
+
+.portal-card:hover {
+    transform: translateY(-8px);
+    border-color: #c9b9f5;
+    box-shadow: 0 12px 30px rgba(50, 40, 100, 0.10);
+}
+
+.portal-icon {
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f1edff;
+    border-radius: 16px;
+    font-size: 32px;
+    margin-bottom: 22px;
+}
+
+.portal-card h4 {
+    color: #292b72;
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.portal-card p {
+    color: #667085;
+    line-height: 1.8;
+    min-height: 120px;
+}
+
+.portal-card .btn {
+    margin-top: 10px;
+}
+
+
+/* ABOUT CARDS */
 
 .info-card {
     background: white;
@@ -196,7 +293,8 @@ a {
     margin-top: 12px;
 }
 
-/* Jobs Section */
+
+/* JOBS SECTION */
 
 .jobs-section {
     background-color: #f8f7fc;
@@ -217,8 +315,12 @@ a {
 }
 
 .job-category {
+    display: inline-block;
     color: #7952d6;
-    font-size: 12px;
+    background: #f1edff;
+    padding: 7px 11px;
+    border-radius: 20px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 1px;
 }
@@ -243,7 +345,8 @@ a {
     margin-top: 20px;
 }
 
-/* Features */
+
+/* FEATURES SECTION */
 
 .feature-card {
     padding: 30px;
@@ -251,11 +354,13 @@ a {
     background: #f8f7fc;
     height: 100%;
     transition: 0.3s;
+    border: 1px solid transparent;
 }
 
 .feature-card:hover {
     background: #eee9ff;
     transform: translateY(-5px);
+    border-color: #ded4ff;
 }
 
 .feature-card h4 {
@@ -269,7 +374,8 @@ a {
     line-height: 1.7;
 }
 
-/* Contact Section */
+
+/* CONTACT SECTION */
 
 .contact-section {
     background: linear-gradient(120deg, #7050c9, #46328e);
@@ -284,9 +390,20 @@ a {
 .contact-section p {
     margin-top: 15px;
     color: #eeeeff;
+    line-height: 1.8;
 }
 
-/* Footer */
+.cta-label {
+    display: inline-block;
+    color: #e5dcff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+
+/* FOOTER */
 
 .footer {
     background: #202044;
@@ -304,7 +421,8 @@ a {
     margin-top: 10px;
 }
 
-/* Responsive Design */
+
+/* RESPONSIVE DESIGN */
 
 @media (max-width: 768px) {
 
@@ -313,15 +431,45 @@ a {
     }
 
     .hero-section h1 {
-        font-size: 34px;
+        font-size: 36px;
+    }
+
+    .hero-highlights {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .section-padding {
+        padding: 60px 0;
     }
 
     .section-heading h2 {
         font-size: 27px;
     }
 
+    .portal-card p {
+        min-height: auto;
+    }
+
     .contact-section h2 {
         font-size: 28px;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .hero-section h1 {
+        font-size: 32px;
+    }
+
+    .hero-card {
+        padding: 30px 20px;
+    }
+
+    .career-stat {
+        flex-direction: column;
+        gap: 20px;
     }
 
 }

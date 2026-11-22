@@ -1,15 +1,14 @@
-
 <?php
 
 $projectName = "CareerConnect";
 $tagline = "Your Career. Your Future. Your Opportunity.";
-$pageTitle = $projectName . " | Placement Portal";
+$pageTitle = $projectName . " | AI-Based Placement Portal";
 
 require_once __DIR__ . "/includes/header.php";
 
 ?>
 
-<!-- Hero Section -->
+<!-- HERO SECTION -->
 <section class="hero-section" id="home">
 
     <div class="container">
@@ -22,15 +21,14 @@ require_once __DIR__ . "/includes/header.php";
                 </span>
 
                 <h1>
-                    Find the Right Opportunity
+                    Discover Opportunities.
                     <span>Build Your Future.</span>
                 </h1>
 
                 <p class="hero-description">
                     <?php echo htmlspecialchars($tagline); ?>
-                    Connect with leading companies, discover career
-                    opportunities and take the next step towards
-                    your professional journey.
+                    Connect with companies, explore job opportunities
+                    and discover career options that match your skills.
                 </p>
 
                 <div class="d-flex flex-wrap gap-3 mt-4">
@@ -41,36 +39,47 @@ require_once __DIR__ . "/includes/header.php";
 
                     <a href="<?php echo BASE_URL; ?>/auth/register.php"
                        class="btn btn-outline-primary btn-lg">
-                        Join Now
+                        Create Account
                     </a>
 
                 </div>
 
+                <div class="hero-highlights mt-4">
+                    <span>✓ Smart Job Matching</span>
+                    <span>✓ Easy Applications</span>
+                    <span>✓ Career Opportunities</span>
+                </div>
+
             </div>
 
-            <div class="col-lg-5 text-center mt-5 mt-lg-0">
+            <div class="col-lg-5 mt-5 mt-lg-0">
 
-                <div class="hero-card">
+                <div class="hero-card text-center">
 
                     <div class="hero-icon">🎓</div>
 
-                    <h3>Start Your Career Journey</h3>
+                    <span class="hero-card-label">
+                        YOUR NEXT OPPORTUNITY
+                    </span>
+
+                    <h3>Make Your Career Move</h3>
 
                     <p>
-                        Discover opportunities that match
-                        your skills and ambitions.
+                        Build your professional profile,
+                        explore opportunities and take
+                        the next step towards your goals.
                     </p>
 
                     <div class="career-stat">
 
                         <div>
                             <h4>Smart</h4>
-                            <small>Job Matching</small>
+                            <small>Job Recommendations</small>
                         </div>
 
                         <div>
-                            <h4>Easy</h4>
-                            <small>Applications</small>
+                            <h4>Simple</h4>
+                            <small>Application Tracking</small>
                         </div>
 
                     </div>
@@ -85,7 +94,106 @@ require_once __DIR__ . "/includes/header.php";
 </section>
 
 
-<!-- About Section -->
+<!-- PORTAL ACCESS SECTION -->
+<section class="section-padding portal-section" id="portals">
+
+    <div class="container">
+
+        <div class="section-heading text-center">
+
+            <span>CHOOSE YOUR PORTAL</span>
+
+            <h2>Access CareerConnect</h2>
+
+            <p>
+                Select your role to continue to the appropriate
+                login page and access your dashboard.
+            </p>
+
+        </div>
+
+        <div class="row g-4 mt-4">
+
+            <!-- STUDENT PORTAL -->
+            <div class="col-md-4">
+
+                <div class="portal-card">
+
+                    <div class="portal-icon">🎓</div>
+
+                    <h4>Student Portal</h4>
+
+                    <p>
+                        Create your profile, upload your resume,
+                        explore job openings, apply for jobs
+                        and receive AI-based recommendations.
+                    </p>
+
+                    <a href="<?php echo BASE_URL; ?>/auth/login.php"
+                       class="btn btn-primary w-100">
+                        Student Login →
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- COMPANY PORTAL -->
+            <div class="col-md-4">
+
+                <div class="portal-card">
+
+                    <div class="portal-icon">🏢</div>
+
+                    <h4>Company Portal</h4>
+
+                    <p>
+                        Post job opportunities, manage job listings,
+                        view student applications and update
+                        candidate recruitment statuses.
+                    </p>
+
+                    <a href="<?php echo BASE_URL; ?>/auth/login.php"
+                       class="btn btn-primary w-100">
+                        Company Login →
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- ADMIN PORTAL -->
+            <div class="col-md-4">
+
+                <div class="portal-card">
+
+                    <div class="portal-icon">🛡️</div>
+
+                    <h4>Admin Portal</h4>
+
+                    <p>
+                        Manage student and company records,
+                        monitor job postings and oversee
+                        placement activities.
+                    </p>
+
+                    <a href="<?php echo BASE_URL; ?>/auth/login.php"
+                       class="btn btn-primary w-100">
+                        Admin Login →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ABOUT SECTION -->
 <section class="section-padding" id="about">
 
     <div class="container">
@@ -94,11 +202,12 @@ require_once __DIR__ . "/includes/header.php";
 
             <span>ABOUT OUR PLATFORM</span>
 
-            <h2>Making Placement Easier</h2>
+            <h2>Connecting Talent with Opportunities</h2>
 
             <p>
-                A single platform to bring students,
-                companies and placement cells together.
+                CareerConnect brings students, companies and
+                placement administrators together through
+                one integrated placement platform.
             </p>
 
         </div>
@@ -114,8 +223,9 @@ require_once __DIR__ . "/includes/header.php";
                     <h4>For Students</h4>
 
                     <p>
-                        Create your profile, upload your resume,
-                        explore jobs and track applications.
+                        Build your profile, upload your resume,
+                        explore job openings and track
+                        your applications.
                     </p>
 
                 </div>
@@ -131,8 +241,9 @@ require_once __DIR__ . "/includes/header.php";
                     <h4>For Companies</h4>
 
                     <p>
-                        Publish job openings, find talented
-                        candidates and manage applications.
+                        Publish job openings, review applicants
+                        and manage recruitment activities
+                        through your company dashboard.
                     </p>
 
                 </div>
@@ -145,11 +256,12 @@ require_once __DIR__ . "/includes/header.php";
 
                     <div class="info-icon">📊</div>
 
-                    <h4>For Placement Cell</h4>
+                    <h4>For Administrators</h4>
 
                     <p>
-                        Manage student records, monitor
-                        recruitment and track placement activities.
+                        Manage platform records, monitor
+                        recruitment activities and oversee
+                        placement operations.
                     </p>
 
                 </div>
@@ -163,7 +275,7 @@ require_once __DIR__ . "/includes/header.php";
 </section>
 
 
-<!-- Jobs Section -->
+<!-- JOBS SECTION -->
 <section class="section-padding jobs-section" id="jobs">
 
     <div class="container">
@@ -175,8 +287,8 @@ require_once __DIR__ . "/includes/header.php";
             <h2>Explore Featured Jobs</h2>
 
             <p>
-                Discover some example opportunities available
-                on our placement platform.
+                Discover different types of opportunities
+                available for aspiring professionals.
             </p>
 
         </div>
@@ -258,8 +370,8 @@ require_once __DIR__ . "/includes/header.php";
         </div>
 
         <p class="text-center text-muted mt-4">
-            These are sample job listings. Actual job postings
-            are available through the student dashboard.
+            The above listings are illustrative examples.
+            Actual job postings can be explored after student login.
         </p>
 
     </div>
@@ -267,16 +379,21 @@ require_once __DIR__ . "/includes/header.php";
 </section>
 
 
-<!-- Features Section -->
+<!-- FEATURES SECTION -->
 <section class="section-padding" id="features">
 
     <div class="container">
 
         <div class="section-heading text-center">
 
-            <span>WHY CAREERCONNECT?</span>
+            <span>OUR KEY FEATURES</span>
 
-            <h2>Everything You Need in One Place</h2>
+            <h2>Everything You Need in One Platform</h2>
+
+            <p>
+                Useful tools designed to simplify the
+                placement and recruitment process.
+            </p>
 
         </div>
 
@@ -285,14 +402,14 @@ require_once __DIR__ . "/includes/header.php";
             <div class="col-md-4">
 
                 <div class="feature-card">
+                    <div class="info-icon">📄</div>
 
-                    <h4>📄 Resume Upload</h4>
+                    <h4>Resume Management</h4>
 
                     <p>
-                        Students can upload and manage
-                        their resumes.
+                        Upload and maintain your resume
+                        for job applications.
                     </p>
-
                 </div>
 
             </div>
@@ -300,14 +417,14 @@ require_once __DIR__ . "/includes/header.php";
             <div class="col-md-4">
 
                 <div class="feature-card">
+                    <div class="info-icon">🤖</div>
 
-                    <h4>🤖 AI Job Recommendations</h4>
+                    <h4>AI Job Recommendations</h4>
 
                     <p>
-                        Find relevant opportunities based
-                        on your skills.
+                        Discover relevant job opportunities
+                        based on your skills using AI.
                     </p>
-
                 </div>
 
             </div>
@@ -315,14 +432,14 @@ require_once __DIR__ . "/includes/header.php";
             <div class="col-md-4">
 
                 <div class="feature-card">
+                    <div class="info-icon">📌</div>
 
-                    <h4>📌 Application Tracking</h4>
+                    <h4>Application Tracking</h4>
 
                     <p>
-                        Keep track of application progress
-                        and recruitment updates.
+                        Monitor application progress and
+                        view recruitment status updates.
                     </p>
-
                 </div>
 
             </div>
@@ -334,21 +451,23 @@ require_once __DIR__ . "/includes/header.php";
 </section>
 
 
-<!-- Contact Section -->
+<!-- CONTACT / CTA SECTION -->
 <section class="contact-section section-padding" id="contact">
 
     <div class="container text-center">
 
-        <h2>Ready to Take the Next Step?</h2>
+        <span class="cta-label">TAKE THE NEXT STEP</span>
+
+        <h2>Build Your Future with CareerConnect</h2>
 
         <p>
-            Create your account and start exploring
-            career opportunities.
+            Start exploring career opportunities
+            and move closer to your professional goals.
         </p>
 
         <a href="<?php echo BASE_URL; ?>/auth/register.php"
            class="btn btn-light btn-lg mt-3">
-            Get Started
+            Get Started →
         </a>
 
     </div>
