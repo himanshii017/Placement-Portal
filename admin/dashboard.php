@@ -104,6 +104,7 @@ $placements = $conn->query(
         <li><a href="manage_students.php">Manage Students</a></li>
         <li><a href="manage_companies.php">Manage Companies</a></li>
         <li><a href="manage_jobs.php">Manage Jobs</a></li>
+        <li><a href="manage_applications.php">Manage Applications</a></li>
     </ul>
 
     <a href="../auth/logout.php" class="btn btn-danger">

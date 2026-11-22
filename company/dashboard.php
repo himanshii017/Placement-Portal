@@ -1,8 +1,10 @@
 
 <?php
 session_start();
-require_once "../config/database.php";
 
+require_once __DIR__ . "/../config/database.php";
+
+// Check company login
 if (!isset($_SESSION["user_id"]) || $_SESSION["role"] !== "company") {
     header("Location: login.php");
     exit();
@@ -13,84 +15,89 @@ $sql = "SELECT * FROM companies WHERE user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->execute([$_SESSION["user_id"]]);
 
-$company = $stmt->fetch();
+$company = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$company) {
     exit("Company profile not found.");
 }
 
-// Count jobs posted by this company
+// Count jobs posted by the company
 $sql = "SELECT COUNT(*) FROM jobs WHERE company_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->execute([$company["company_id"]]);
 
 $total_jobs = $stmt->fetchColumn();
+
+$pageTitle = "Company Dashboard | CareerConnect";
+
+require_once __DIR__ . "/../includes/header.php";
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="container py-5">
 
-    <title>Company Dashboard - CareerConnect</title>
+    <div class="mb-4">
+        <h2>Company Dashboard</h2>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
-</head>
+        <h5>
+            Welcome,
+            <?= htmlspecialchars($company["company_name"], ENT_QUOTES, "UTF-8"); ?>!
+        </h5>
 
-<body class="bg-light">
+        <p class="text-muted">
+            Manage your recruitment activities through CareerConnect.
+        </p>
+    </div>
 
-<div class="container mt-5">
+    <div class="row g-4">
 
-    <div class="card shadow p-4">
-
-        <h1>Company Dashboard</h1>
-
-        <h4>
-            Welcome, <?php echo htmlspecialchars($company["company_name"]); ?>!
-        </h4>
-
-        <p>Manage your recruitment activities through CareerConnect.</p>
-
-        <hr>
-
-        <div class="row">
-
-            <div class="col-md-6 mb-3">
-                <div class="card bg-primary text-white p-3">
-                    <h5>Total Jobs Posted</h5>
-                    <h2><?php echo $total_jobs; ?></h2>
-                </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 p-4">
+                <h5>Total Jobs Posted</h5>
+                <h2 class="text-primary">
+                    <?= (int) $total_jobs; ?>
+                </h2>
             </div>
+        </div>
 
-            <div class="col-md-6 mb-3">
-                <div class="card bg-success text-white p-3">
-                    <h5>Recruitment Portal</h5>
-                    <p>Manage your job opportunities.</p>
-                </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 p-4">
+                <h5>Recruitment Portal</h5>
+                <p class="text-muted mb-0">
+                    Create and manage job opportunities for students.
+                </p>
             </div>
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm border-0 p-4 mt-4">
+
+        <h4>Company Activities</h4>
+
+        <div class="list-group mt-3">
+
+            <a href="post_job.php" class="list-group-item list-group-item-action">
+                Post a New Job
+            </a>
+
+            <a href="manage_jobs.php" class="list-group-item list-group-item-action">
+                Manage Posted Jobs
+            </a>
+
+            <a href="applicants.php" class="list-group-item list-group-item-action">
+                View Student Applications
+            </a>
 
         </div>
 
-        <hr>
-
-        <h5>Company Activities</h5>
-
-        <ul>
-            <li><a href="post_job.php">Post a New Job</a></li>
-            <li><a href="manage_jobs.php">Manage Posted Jobs</a></li>
-            <li><a href="applicants.php">View Student Applications</a></li>
-            <li><a href="applicants.php">Manage Applicants</a></li>
-        </ul>
-
-        <a href="../auth/logout.php" class="btn btn-danger">
-            Logout
-        </a>
+        <div class="mt-4">
+            <a href="../auth/logout.php" class="btn btn-danger">
+                Logout
+            </a>
+        </div>
 
     </div>
 
 </div>
 
-</body>
-</html>
+<?php require_once __DIR__ . "/../includes/footer.php"; ?>

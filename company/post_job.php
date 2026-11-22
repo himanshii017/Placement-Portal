@@ -1,7 +1,8 @@
 
 <?php
 session_start();
-require_once "../config/database.php";
+
+require_once __DIR__ . "/../config/database.php";
 
 // Check company login
 if (!isset($_SESSION["user_id"]) || $_SESSION["role"] !== "company") {
@@ -14,7 +15,8 @@ $stmt = $conn->prepare(
     "SELECT company_id FROM companies WHERE user_id = ?"
 );
 $stmt->execute([$_SESSION["user_id"]]);
-$company = $stmt->fetch();
+
+$company = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$company) {
     exit("Company profile not found.");
@@ -23,19 +25,40 @@ if (!$company) {
 $company_id = $company["company_id"];
 $message = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Keep entered values if validation fails
+$job_title = "";
+$job_description = "";
+$location = "";
+$job_type = "";
+$salary = "";
+$eligibility = "";
+$application_deadline = "";
 
-    $job_title = trim($_POST["job_title"]);
-    $job_description = trim($_POST["job_description"]);
-    $location = trim($_POST["location"]);
-    $job_type = $_POST["job_type"];
-    $salary = trim($_POST["salary"]);
-    $eligibility = trim($_POST["eligibility"]);
-    $application_deadline = $_POST["application_deadline"];
+// Generate CSRF token
+if (empty($_SESSION["csrf_token"])) {
+    $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
+}
+
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $job_title = trim($_POST["job_title"] ?? "");
+    $job_description = trim($_POST["job_description"] ?? "");
+    $location = trim($_POST["location"] ?? "");
+    $job_type = $_POST["job_type"] ?? "";
+    $salary = trim($_POST["salary"] ?? "");
+    $eligibility = trim($_POST["eligibility"] ?? "");
+    $application_deadline = $_POST["application_deadline"] ?? "";
 
     $allowed_types = ["Full Time", "Part Time", "Internship"];
 
-    if (
+    if (!hash_equals(
+        $_SESSION["csrf_token"],
+        $_POST["csrf_token"] ?? ""
+    )) {
+        $message = "Invalid form submission. Please try again.";
+    }
+    elseif (
         $job_title === "" ||
         $job_description === "" ||
         $location === "" ||
@@ -49,108 +72,156 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     elseif (
         $application_deadline !== "" &&
+        (
+            !preg_match('/^\d{4}-\d{2}-\d{2}$/', $application_deadline) ||
+            !checkdate(
+                (int) substr($application_deadline, 5, 2),
+                (int) substr($application_deadline, 8, 2),
+                (int) substr($application_deadline, 0, 4)
+            )
+        )
+    ) {
+        $message = "Please enter a valid application deadline.";
+    }
+    elseif (
+        $application_deadline !== "" &&
         $application_deadline < date("Y-m-d")
     ) {
         $message = "Application deadline cannot be in the past.";
     }
     else {
-        $sql = "INSERT INTO jobs
-                (company_id, job_title, job_description, location,
-                 job_type, salary, eligibility, application_deadline)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        $stmt = $conn->prepare($sql);
+        try {
 
-        $stmt->execute([
-            $company_id,
-            $job_title,
-            $job_description,
-            $location,
-            $job_type,
-            $salary,
-            $eligibility,
-            $application_deadline !== "" ? $application_deadline : null
-        ]);
+            $sql = "INSERT INTO jobs
+                    (company_id, job_title, job_description, location,
+                     job_type, salary, eligibility, application_deadline)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        $message = "Job posted successfully!";
+            $stmt = $conn->prepare($sql);
+
+            $stmt->execute([
+                $company_id,
+                $job_title,
+                $job_description,
+                $location,
+                $job_type,
+                $salary,
+                $eligibility,
+                $application_deadline !== "" ? $application_deadline : null
+            ]);
+
+            // Prevent duplicate submission on page refresh
+            $_SESSION["job_message"] = "Job posted successfully!";
+            $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
+
+            header("Location: manage_jobs.php");
+            exit();
+
+        } catch (PDOException $e) {
+
+            error_log("Job posting error: " . $e->getMessage());
+            $message = "Unable to post the job. Please try again.";
+        }
     }
 }
+
+// Display success message after redirect
+if (isset($_SESSION["job_message"])) {
+    $message = $_SESSION["job_message"];
+    unset($_SESSION["job_message"]);
+}
+
+$pageTitle = "Post a Job | CareerConnect";
+
+require_once __DIR__ . "/../includes/header.php";
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="container py-5">
 
-    <title>Post a Job - CareerConnect</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
-</head>
-
-<body class="bg-light">
-
-<div class="container mt-5 mb-5">
-
-    <div class="card shadow p-4">
+    <div class="card shadow-sm border-0 p-4">
 
         <h2 class="mb-4">Post a New Job</h2>
 
         <?php if ($message !== ""): ?>
             <div class="alert alert-info">
-                <?php echo htmlspecialchars($message); ?>
+                <?= htmlspecialchars($message, ENT_QUOTES, "UTF-8"); ?>
             </div>
         <?php endif; ?>
 
         <form method="POST">
 
+            <input type="hidden"
+                   name="csrf_token"
+                   value="<?= htmlspecialchars($_SESSION["csrf_token"], ENT_QUOTES, "UTF-8"); ?>">
+
             <div class="mb-3">
                 <label class="form-label">Job Title</label>
-                <input type="text" name="job_title"
-                       class="form-control" required>
+                <input type="text"
+                       name="job_title"
+                       class="form-control"
+                       value="<?= htmlspecialchars($job_title, ENT_QUOTES, "UTF-8"); ?>"
+                       required>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Job Description</label>
                 <textarea name="job_description"
-                          class="form-control" rows="4" required></textarea>
+                          class="form-control"
+                          rows="4"
+                          required><?= htmlspecialchars($job_description, ENT_QUOTES, "UTF-8"); ?></textarea>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Location</label>
-                <input type="text" name="location"
-                       class="form-control" required>
+                <input type="text"
+                       name="location"
+                       class="form-control"
+                       value="<?= htmlspecialchars($location, ENT_QUOTES, "UTF-8"); ?>"
+                       required>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Job Type</label>
                 <select name="job_type" class="form-select" required>
+
                     <option value="">Select Job Type</option>
-                    <option value="Full Time">Full Time</option>
-                    <option value="Part Time">Part Time</option>
-                    <option value="Internship">Internship</option>
+
+                    <?php foreach (["Full Time", "Part Time", "Internship"] as $type): ?>
+                        <option value="<?= $type; ?>"
+                            <?= $job_type === $type ? "selected" : ""; ?>>
+                            <?= $type; ?>
+                        </option>
+                    <?php endforeach; ?>
+
                 </select>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Salary / Package</label>
-                <input type="text" name="salary"
+                <input type="text"
+                       name="salary"
                        class="form-control"
-                       placeholder="Example: 3–5 LPA" required>
+                       placeholder="Example: 3-5 LPA"
+                       value="<?= htmlspecialchars($salary, ENT_QUOTES, "UTF-8"); ?>"
+                       required>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Eligibility Criteria</label>
                 <textarea name="eligibility"
-                          class="form-control" rows="3" required></textarea>
+                          class="form-control"
+                          rows="3"
+                          required><?= htmlspecialchars($eligibility, ENT_QUOTES, "UTF-8"); ?></textarea>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Application Deadline</label>
-                <input type="date" name="application_deadline"
+                <input type="date"
+                       name="application_deadline"
                        class="form-control"
-                       min="<?php echo date('Y-m-d'); ?>">
+                       min="<?= date("Y-m-d"); ?>"
+                       value="<?= htmlspecialchars($application_deadline, ENT_QUOTES, "UTF-8"); ?>">
             </div>
 
             <button type="submit" class="btn btn-primary">
@@ -167,5 +238,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </div>
 
-</body>
-</html>
+<?php require_once __DIR__ . "/../includes/footer.php"; ?>
