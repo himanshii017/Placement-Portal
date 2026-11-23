@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -147,6 +146,30 @@ require_once __DIR__ . "/../includes/header.php";
 
                 </div>
             </div>
+
+        </div>
+
+        <!-- Manage Skills -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card dashboard-card shadow-sm">
+                <div class="card-body p-4">
+
+                    <div class="card-icon">🛠️</div>
+
+                     <h5 class="fw-bold">Manage My Skills</h5>
+
+                    <p>
+                        Add new skills, select multiple skills,
+                        and update or remove your existing skills.
+                    </p>
+
+                    <a href="manage_skills.php" class="btn btn-outline-primary">
+                        Manage Skills
+                    </a>
+
+                </div>
+         </div>
 
         </div>
 
